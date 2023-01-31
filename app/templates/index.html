@@ -10,10 +10,14 @@
   <body>
       <h1>PDF Storage & text extraction</h1>
       <form
+        action="http://localhost:5000/documents"
+        method="post"
+        enctype="multipart/form-data"
       >
           <input
             type="file"
             accept="application/pdf"
+            name="file"
           />
         <br/>
         <button type="submit" >Upload</button>
