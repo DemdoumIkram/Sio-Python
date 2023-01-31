@@ -53,6 +53,7 @@ th {
 
 td {
   padding: 10px;
+  background-color: rgba(211, 211, 211, 0.534);
 }
 
 pre {
@@ -64,4 +65,12 @@ pre {
   overflow-y: scroll;
   background-color: #f2f2f2;
   border-radius: 10px;
+}
+
+.tag {    
+  color: hsl(240deg 7% 97%);
+  background: hsl(180deg 51% 52%);
+  padding: 5px;
+  border-radius: 20%;
+  font-style: italic;
 }

@@ -1,10 +1,18 @@
 <html>
   <head>
     <title>PDF Metadata</title>
+    <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/main.css') }}"
+    />
   </head>
   <body>
     <h1>PDF Metadata</h1>
     <table>
+      <tr>
+        <th>Status</th>
+        <td><span class="tag">{{ pdf_metadata.status }}</span></td>
+      </tr>
       <tr>
         <th>Title</th>
         <td>{{ pdf_metadata.title }}</td>
@@ -27,11 +35,11 @@
       </tr>
       <tr>
         <th>Creation Date</th>
-        <td>{{ pdf_metadata.creationDate }}</td>
+        <td>{{ pdf_metadata.creationDate.strftime("%B %d, %Y") }}</td>
       </tr>
       <tr>
         <th>Text</th>
-        <td>{{ pdf_metadata.text }}</td>
+        <td><a href="{{ pdf_metadata.content }}">{{ pdf_metadata.content }}</a></td>
       </tr>
     </table>
   </body>
