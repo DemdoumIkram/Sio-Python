@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>PDF Metadata</title>
+  </head>
+  <body>
+    <h1>PDF Metadata</h1>
+    <table>
+      <tr>
+        <th>Title</th>
+        <td>{{ pdf_metadata.title }}</td>
+      </tr>
+      <tr>
+        <th>Author</th>
+        <td>{{ pdf_metadata.author }}</td>
+      </tr>
+      <tr>
+        <th>Subject</th>
+        <td>{{ pdf_metadata.subject }}</td>
+      </tr>
+      <tr>
+        <th>Keywords</th>
+        <td>{{ pdf_metadata.keywords }}</td>
+      </tr>
+      <tr>
+        <th>Producer</th>
+        <td>{{ pdf_metadata.producer }}</td>
+      </tr>
+      <tr>
+        <th>Creation Date</th>
+        <td>{{ pdf_metadata.creationDate }}</td>
+      </tr>
+      <tr>
+        <th>Text</th>
+        <td>{{ pdf_metadata.text }}</td>
+      </tr>
+    </table>
+  </body>
+</html>

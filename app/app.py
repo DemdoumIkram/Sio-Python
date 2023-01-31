@@ -31,4 +31,20 @@ def upload_pdf():
         "text": text,
         "meta": reader.metadata
     }
-    return documents[document_id]
+    return document_status(document_id)
+
+@app.route("/documents/<int:id>", methods=["GET"])
+def document_status(id):
+    if id not in documents:
+        return {"error": "document not found"}, 404
+    meta = documents[id]["meta"]
+    pdf_metadata = {
+        'title': meta["/Title"],
+        'author': meta["/Author"],
+        'subject': meta["/Subject"],
+        'keywords': meta["/Keywords"],
+        'producer': meta["/Producer"],
+        'creationDate': meta["/CreationDate"],
+        'text': documents[id]["text"]
+    }
+    return render_template("metadata.html", pdf_metadata=pdf_metadata)
