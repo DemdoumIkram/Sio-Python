@@ -26,10 +26,17 @@ def upload_pdf():
     for page in reader.pages:
         text += page.extract_text()
 
+    meta = reader.metadata
+
     document_id = len(documents)
-    documents[document_id] = {
-        "text": text,
-        "meta": reader.metadata
+    documents[document_id] =  {
+        'title': meta["/Title"],
+        'author': meta["/Author"],
+        'subject': meta["/Subject"],
+        'keywords': meta["/Keywords"],
+        'producer': meta["/Producer"],
+        'creationDate': meta["/CreationDate"],
+        'text': text
     }
     return document_status(document_id)
 
@@ -37,14 +44,4 @@ def upload_pdf():
 def document_status(id):
     if id not in documents:
         return {"error": "document not found"}, 404
-    meta = documents[id]["meta"]
-    pdf_metadata = {
-        'title': meta["/Title"],
-        'author': meta["/Author"],
-        'subject': meta["/Subject"],
-        'keywords': meta["/Keywords"],
-        'producer': meta["/Producer"],
-        'creationDate': meta["/CreationDate"],
-        'text': documents[id]["text"]
-    }
-    return render_template("metadata.html", pdf_metadata=pdf_metadata)
+    return render_template("metadata.html", pdf_metadata=documents[id])
