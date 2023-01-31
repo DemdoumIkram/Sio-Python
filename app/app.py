@@ -1,20 +1,23 @@
-from flask import Flask, render_template, request
-from PyPDF2 import PdfReader
 from datetime import datetime
+
+from flask import Flask, render_template, request
+from pypdf import PdfReader
 
 app = Flask(__name__)
 
 documents = {}
 
-@app.route('/')
+
+@app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template("index.html")
+
 
 @app.route("/documents", methods=["POST"])
 def upload_pdf():
     file = request.files["file"]
 
-     if not file:
+    if not file:
         return {"error": "Error reading the file"}, 400
 
     if file.filename.split(".")[1] != "pdf":
@@ -28,26 +31,29 @@ def upload_pdf():
         text += page.extract_text()
 
     meta = reader.metadata
+    date = datetime.strptime(meta["/CreationDate"][2:], "%Y%m%d%H%M%SZ")
 
     document_id = len(documents)
-    documents[document_id] =  {
-        'title': meta["/Title"],
-        'author': meta["/Author"],
-        'subject': meta["/Subject"],
-        'keywords': meta["/Keywords"],
-        'producer': meta["/Producer"],
-        'creationDate': datetime.strptime(meta["/CreationDate"][2:], "%Y%m%d%H%M%SZ"),
-        'content': "http://localhost:5000/text/"+str(document_id),
-        'text': text,
-        "status": "success"
+    documents[document_id] = {
+        "title": meta["/Title"],
+        "author": meta["/Author"],
+        "subject": meta["/Subject"],
+        "keywords": meta["/Keywords"],
+        "producer": meta["/Producer"],
+        "creationDate": date,
+        "content": "http://localhost:5000/text/" + str(document_id),
+        "text": text,
+        "status": "success",
     }
     return document_status(document_id)
+
 
 @app.route("/documents/<int:id>", methods=["GET"])
 def document_status(id):
     if id not in documents:
         return {"error": "document not found"}, 404
     return render_template("metadata.html", pdf_metadata=documents[id]), 200
+
 
 @app.route("/text/<int:pdf_id>", methods=["GET"])
 def get_text_by_id(pdf_id):
