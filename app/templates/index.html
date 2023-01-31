@@ -1,1 +1,22 @@
-<h1>Hello World!</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PDF Storage & text extraction</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+  </head>
+  <body>
+      <h1>PDF Storage & text extraction</h1>
+      <form
+      >
+          <input
+            type="file"
+            accept="application/pdf"
+          />
+        <br/>
+        <button type="submit" >Upload</button>
+      </form>
+  </body>
+</html>
