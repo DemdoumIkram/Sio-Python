@@ -45,3 +45,11 @@ def document_status(id):
     if id not in documents:
         return {"error": "document not found"}, 404
     return render_template("metadata.html", pdf_metadata=documents[id])
+
+@app.route("/text/<int:pdf_id>", methods=["GET"])
+def get_text_by_id(pdf_id):
+    try:
+        return render_template("text.html", text=documents[pdf_id]["text"]), 200
+
+    except:
+        return {"error": "Error while getting a PDF text"}, 404
